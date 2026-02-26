@@ -38,11 +38,21 @@ That's it.  If you ever move the data you'll have to modify the contents of this
 
 ## Read the calanus data
 
-```{r}
+```{r read}
 suppressPackageStartupMessages({
   library(dplyr)
   library(azmpcfin)
 })
 
-x <- read_calanus()
-glimpse(x)
+x <- read_calanus() |>
+  glimpse()
+```
+
+## Exporting in [ecomon](https://github.com/BigelowLab/ecomon) friendly format
+
+We provide a means to transform the data for a given species into a format suitable for merging with AZMP-corrected ecomon data.
+
+```{r as_ecomon}
+y = as_ecomon(x, species = "calanus_finmarchicus") |>
+  glimpse()
+```

@@ -2,9 +2,9 @@ Package: azmpcfin
 Title: azmpdata - manage local data of DFO-MPO calanus database
 Description: Managing local repository of DFO-MPO calanus database.
 URL: https://github.com/BigelowLab/azmpcfin
-Version: 0.1
+Version: 0.2
 Depends:
-    R (>= 4.1)
+    R (>= 4.2)
 Imports:
     utils,
     rlang,
@@ -14,7 +14,8 @@ Imports:
     sf,
     oce
 Maintainer: Ben Tupper <btupper@bigelow.org>
-Author:  Caroline Lehoux <caroline.lehoux@dfo-mpo.gc.ca>, Ben Tupper <btupper@bigelow.org>
+Author: Caroline Lehoux <caroline.lehoux@dfo-mpo.gc.ca>, Ben Tupper <btupper@bigelow.org>
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)

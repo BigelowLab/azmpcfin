@@ -3,11 +3,11 @@ azmpcfin
 
 ## Requirements
 
--   [R v4.1+](https://www.r-project.org/)
--   [rlang](https://CRAN.R-project.org/package=rlang)
--   [dplyr](https://CRAN.R-project.org/package=dplyr)
--   [readr](https://CRAN.R-project.org/package=readr)
--   [sf](https://CRAN.R-project.org/package=sf)
+- [R v4.1+](https://www.r-project.org/)
+- [rlang](https://CRAN.R-project.org/package=rlang)
+- [dplyr](https://CRAN.R-project.org/package=dplyr)
+- [readr](https://CRAN.R-project.org/package=readr)
+- [sf](https://CRAN.R-project.org/package=sf)
 
 ## Installation
 
@@ -20,8 +20,8 @@ location but accessed by many users. To achieve this resource-friendly
 goal and still simplified access for each user, we need to inform the
 package where the data resides. We do this by storing the path to the
 data location in each user’s home directory in a hidden text file,
-“\~/.azmpcfin”. That text file has just one line in it which contains
-the full path to the shared dataset. For example, the author’s contains
+“~/.azmpcfin”. That text file has just one line in it which contains the
+full path to the shared dataset. For example, the author’s contains
 `mnt/ecocast/coredata/dfompo/AZMP_data` which points to a shared network
 drive mounted on our linux platform.
 
@@ -46,8 +46,8 @@ suppressPackageStartupMessages({
   library(azmpcfin)
 })
 
-x <- read_calanus()
-glimpse(x)
+x <- read_calanus() |>
+  glimpse()
 ```
 
     ## Rows: 7,802
@@ -82,3 +82,34 @@ glimpse(x)
     ## $ calanus_hyperboreus_iv   <dbl> 8697.996764, 1962.408410, 177.935243, 0.00000…
     ## $ calanus_hyperboreus_v    <dbl> 10482.20123, 3389.61453, 177.93524, 25.86173,…
     ## $ calanus_hyperboreus_vi   <dbl> 3122.35781, 1070.40459, 0.00000, 0.00000, 181…
+
+## Exporting in [ecomon](https://github.com/BigelowLab/ecomon) friendly format
+
+We provide a means to transform the data for a given species into a
+format suitable for merging with AZMP-corrected ecomon data.
+
+``` r
+y = as_ecomon(x, species = "calanus_finmarchicus") |>
+  glimpse()
+```
+
+    ## Rows: 7,802
+    ## Columns: 18
+    ## $ seq                  <chr> "AZMP_1", "AZMP_2", "AZMP_3", "AZMP_4", "AZMP_5",…
+    ## $ cruise_name          <chr> "QC_TSI", "QC_TSI", "QC_TSI", "QC_TESL", "QC_TESL…
+    ## $ station              <chr> "TSI3", "TSI5", "TSI6", "TESL1", "TESL2", "TESL3"…
+    ## $ latitude             <dbl> 49.55117, 49.88333, 50.05333, 48.57583, 48.62750,…
+    ## $ longitude            <dbl> -66.22983, -66.27050, -66.27500, -68.48500, -68.5…
+    ## $ date                 <date> 2000-12-03, 2000-12-03, 2000-12-03, 2000-12-04, …
+    ## $ sta_depth            <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ tow_depth            <dbl> 340, 276, 121, 38, 225, 331, 339, 341, 149, 342, …
+    ## $ gear_volume_filtered <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ zoo_aliquot          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ total_m2             <dbl> 42820.9071, 18196.8780, 5160.1220, 1241.3633, 121…
+    ## $ c1_m2                <dbl> 223.02556, 178.40076, 711.74097, 387.92602, 90.54…
+    ## $ c2_m2                <dbl> 223.02556, 356.80153, 1245.54670, 77.58520, 0.000…
+    ## $ c3_m2                <dbl> 1115.127790, 1427.206117, 711.740970, 232.755610,…
+    ## $ c4_m2                <dbl> 4460.511161, 1962.408410, 1067.611456, 439.649486…
+    ## $ c5_m2                <dbl> 35015.01262, 14093.66040, 1067.61146, 51.72347, 8…
+    ## $ c6_m2                <dbl> 1784.20446, 178.40076, 355.87049, 51.72347, 362.1…
+    ## $ unk_m2               <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…

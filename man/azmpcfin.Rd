@@ -2,9 +2,17 @@
 % Please edit documentation in R/azmpcfin-package.R
 \docType{package}
 \name{azmpcfin}
+\alias{azmpcfin-package}
 \alias{azmpcfin}
 \alias{azmp}
 \title{azmpcfin - manage local data of DFO-MPO calanus database}
 \description{
 Functions for managing local repository of DFO-MPO calanus database.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/BigelowLab/azmpcfin}
+}
+
 }
