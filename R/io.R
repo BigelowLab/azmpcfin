@@ -32,7 +32,8 @@ cols_calanus <- function(){
     calanus_hyperboreus_iii = readr::col_double(),
     calanus_hyperboreus_iv = readr::col_double(),
     calanus_hyperboreus_v = readr::col_double(),
-    calanus_hyperboreus_vi = readr::col_double()
+    calanus_hyperboreus_vi = readr::col_double(),
+    .default = readr::col_guess()
   )
 }
 
@@ -43,7 +44,9 @@ cols_calanus <- function(){
 #' @param filename character, the file to read
 #' @param form character, one of 'tibble' or 'sf'
 #' @return  tibble or sf POINT table
-read_calanus <- function(filename = get_data_path("CalanusAbundance_m2_CAN_data.txt"),
+read_calanus <- function(filename = c(
+                          get_data_path("CalanusAbundance_m2_CAN_data.txt"),
+                          get_data_path("CalanusAbundance_m2_CAN_data_1999_2024.txt"))[2],
                          form = c("tibble", "sf")[1]){
   
   x <- readr::read_tsv(filename,

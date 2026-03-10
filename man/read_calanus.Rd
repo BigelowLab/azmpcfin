@@ -5,7 +5,8 @@
 \title{Read calanus abundance tables}
 \usage{
 read_calanus(
-  filename = get_data_path("CalanusAbundance_m2_CAN_data.txt"),
+  filename = c(get_data_path("CalanusAbundance_m2_CAN_data.txt"),
+    get_data_path("CalanusAbundance_m2_CAN_data_1999_2024.txt"))[2],
   form = c("tibble", "sf")[1]
 )
 }
