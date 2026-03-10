@@ -13,6 +13,13 @@ azmpcfin
 
     remotes::install_github("BigelowLab/azmpcfin")
 
+## Data Access
+
+Data is kindly provided by request from [Fisheries and Oceans
+Canada](https://www.dfo-mpo.gc.ca/index-eng.html). While we provide code
+to simplify access to the data, we do not provide that data ourselves.
+The data is not part of the package.
+
 ## Initial Use
 
 The premise of this package is that data may be stored in a single
@@ -40,6 +47,8 @@ of this hidden text file.
 
 ## Read the calanus data
 
+Reading the data is very easy.
+
 ``` r
 suppressPackageStartupMessages({
   library(dplyr)
@@ -50,8 +59,8 @@ x <- read_calanus() |>
   glimpse()
 ```
 
-    ## Rows: 7,802
-    ## Columns: 30
+    ## Rows: 8,646
+    ## Columns: 31
     ## $ region                   <chr> "QC", "QC", "QC", "QC", "QC", "QC", "QC", "QC…
     ## $ transect                 <chr> "TSI", "TSI", "TSI", "TESL", "TESL", "TESL", …
     ## $ station                  <chr> "TSI3", "TSI5", "TSI6", "TESL1", "TESL2", "TE…
@@ -82,6 +91,40 @@ x <- read_calanus() |>
     ## $ calanus_hyperboreus_iv   <dbl> 8697.996764, 1962.408410, 177.935243, 0.00000…
     ## $ calanus_hyperboreus_v    <dbl> 10482.20123, 3389.61453, 177.93524, 25.86173,…
     ## $ calanus_hyperboreus_vi   <dbl> 3122.35781, 1070.40459, 0.00000, 0.00000, 181…
+    ## $ ID                       <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14…
+
+You can also request the same data as spatially referenced data.
+
+``` r
+x <- read_calanus(form = 'sf') |>
+  print()
+```
+
+    ## Simple feature collection with 8646 features and 29 fields
+    ## Geometry type: POINT
+    ## Dimension:     XY
+    ## Bounding box:  xmin: -68.76583 ymin: 41.2 xmax: -42 ymax: 57.53
+    ## Geodetic CRS:  WGS 84
+    ## # A tibble: 8,646 × 30
+    ##    region transect station  year month   day time   timezone depth mesh_size
+    ##  * <chr>  <chr>    <chr>   <dbl> <dbl> <dbl> <time> <chr>    <dbl>     <dbl>
+    ##  1 QC     TSI      TSI3     2000    12     3 22:55  UTC        340       202
+    ##  2 QC     TSI      TSI5     2000    12     3 19:17  UTC        276       202
+    ##  3 QC     TSI      TSI6     2000    12     3 17:28  UTC        121       202
+    ##  4 QC     TESL     TESL1    2000    12     4 14:21  UTC         38       202
+    ##  5 QC     TESL     TESL2    2000    12     4 15:45  UTC        225       202
+    ##  6 QC     TESL     TESL3    2000    12     4 17:26  UTC        331       202
+    ##  7 QC     TESL     TESL4    2000    12     4 19:02  UTC        339       202
+    ##  8 QC     TESL     TESL5    2000    12     4 20:56  UTC        341       202
+    ##  9 QC     TESL     TESL6    2000    12     4 23:00  UTC        149       202
+    ## 10 QC     TSI      TSI2     2000    12     4 01:07  UTC        342       202
+    ## # ℹ 8,636 more rows
+    ## # ℹ 20 more variables: calanus_finmarchicus_i <dbl>,
+    ## #   calanus_finmarchicus_ii <dbl>, calanus_finmarchicus_iii <dbl>,
+    ## #   calanus_finmarchicus_iv <dbl>, calanus_finmarchicus_v <dbl>,
+    ## #   calanus_finmarchicus_vi <dbl>, calanus_glacialis_i <dbl>,
+    ## #   calanus_glacialis_ii <dbl>, calanus_glacialis_iii <dbl>,
+    ## #   calanus_glacialis_iv <dbl>, calanus_glacialis_v <dbl>, …
 
 ## Exporting in [ecomon](https://github.com/BigelowLab/ecomon) friendly format
 
@@ -89,11 +132,12 @@ We provide a means to transform the data for a given species into a
 format suitable for merging with AZMP-corrected ecomon data.
 
 ``` r
+x <- read_calanus()
 y = as_ecomon(x, species = "calanus_finmarchicus") |>
   glimpse()
 ```
 
-    ## Rows: 7,802
+    ## Rows: 8,646
     ## Columns: 18
     ## $ seq                  <chr> "AZMP_1", "AZMP_2", "AZMP_3", "AZMP_4", "AZMP_5",…
     ## $ cruise_name          <chr> "QC_TSI", "QC_TSI", "QC_TSI", "QC_TESL", "QC_TESL…

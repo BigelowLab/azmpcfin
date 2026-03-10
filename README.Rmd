@@ -21,6 +21,11 @@ knitr::opts_chunk$set(echo = TRUE)
 remotes::install_github("BigelowLab/azmpcfin")
 ```
 
+
+## Data Access
+
+Data is kindly provided by request from [Fisheries and Oceans Canada](https://www.dfo-mpo.gc.ca/index-eng.html).  While we provide code to simplify access to the data, we do not provide that data ourselves.  The data is not part of the package.
+
 ## Initial Use
 
 The premise of this package is that data may be stored in a single location but accessed by many users. To achieve this resource-friendly goal and still simplified access for each user, we need to inform the package where the data resides.  We do this by storing the path to the data location in each user's home directory in a hidden text file, "~/.azmpcfin".  That text file has just one line in it which contains the full path to the shared dataset.  For example, the author's contains `mnt/ecocast/coredata/dfompo/AZMP_data` which points to a shared network drive mounted on our linux platform.  
@@ -38,6 +43,8 @@ That's it.  If you ever move the data you'll have to modify the contents of this
 
 ## Read the calanus data
 
+Reading the data is very easy.
+
 ```{r read}
 suppressPackageStartupMessages({
   library(dplyr)
@@ -48,11 +55,20 @@ x <- read_calanus() |>
   glimpse()
 ```
 
+You can also request the same data as spatially referenced data.
+
+```{r spatial}
+x <- read_calanus(form = 'sf') |>
+  print()
+```
+
+
 ## Exporting in [ecomon](https://github.com/BigelowLab/ecomon) friendly format
 
 We provide a means to transform the data for a given species into a format suitable for merging with AZMP-corrected ecomon data.
 
 ```{r as_ecomon}
+x <- read_calanus()
 y = as_ecomon(x, species = "calanus_finmarchicus") |>
   glimpse()
 ```
